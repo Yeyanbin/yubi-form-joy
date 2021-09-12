@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, DebuggerEvent, onMounted, ref, watch } from 'vue';
 import { getDefaultFormValue, handleContent } from './common';
 import { formConfig } from './config';
 import useExpressionCompute from './hooks/useExpressionCompute';
@@ -31,8 +31,16 @@ const emit = defineEmits(['change', 'update'])
 const formValue = ref(getDefaultFormValue(props.content, props.state));
 
 const formItemList = computed(() => {
-  console.log('handleContent', formItemList.value)
+  console.log('handleContent')
+  // const _formValue = formValue;
   return handleContent(props.content, useExpressionCompute(props.state, formValue.value))
+}, {
+  onTrack: (event: DebuggerEvent) => {
+    console.log('track', event);
+  },
+  onTrigger: (event: DebuggerEvent) => {
+    console.log('trigger', event);
+  }
 });
 
 /**

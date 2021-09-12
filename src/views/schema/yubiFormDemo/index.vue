@@ -63,6 +63,30 @@ const content = [
         value: 'song6'
       },
     ]
+  },
+  {
+    component: "NSelect",
+    label: "性别",
+    path: "gender",
+    options: [
+      {
+        label: "女",
+        value: 0,
+      },
+      {
+        label: '男',
+        value: 1,
+      },
+    ]
+  },
+  {
+    show: {
+      type: 'boolean',
+      expression: '${gender} = 1'
+    },
+    component: "NInput",
+    label: "薪资多少",
+    path: "income",
   }
 ];
 

@@ -5,7 +5,7 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
 
   const handleNormalObject = (item) => {
     const newItem = {};
-  
+    
     Object.keys(item).forEach(key => {
       if (typeof item[key] === 'string') {
         // 发现一个值其是字符串
@@ -57,7 +57,14 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   const newContent = [];
 
   content.forEach(item => {
-    newContent.push(handleNormalObject(item));
+    if (item.show) {
+      const show = handleExpression(item.show); 
+      if (show && show !== 'false') {
+        newContent.push(handleNormalObject(item));
+      }
+    } else {
+      newContent.push(handleNormalObject(item));
+    }
   });
   return newContent;
 }

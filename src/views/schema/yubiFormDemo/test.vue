@@ -1,14 +1,15 @@
+
+
 <template>
-  <h2>this is yubiFormOp page!</h2>
+  <div>
+    testComponent
+  </div>
 </template>
 
 <script setup lang="ts">
-
 
 </script>
 
 <style scoped>
 
 </style>
-
-

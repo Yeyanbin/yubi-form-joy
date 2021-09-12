@@ -21,6 +21,8 @@ import {
   NGrid,
   NLayout,
   NLayoutSider,
+  NLayoutContent,
+  NConfigProvider,
   // form component
   NForm,
   NFormItem,
@@ -34,7 +36,6 @@ import {
   NSelect,
   NSwitch,
   NTimePicker,
-  NLayoutContent,
 } from 'naive-ui'
 
 export default create({
@@ -71,6 +72,7 @@ export default create({
     NLayout,
     NLayoutSider,
     NLayoutContent,
+    NConfigProvider,
   ]
 });
 

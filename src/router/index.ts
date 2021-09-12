@@ -26,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
+        path: 'demo',
+        name: '表单demo',
+        component: () => import('@/views/schema/yubiFormDemo/index.vue'),
+      },
+      {
         path: 'op',
         name: '制作表单',
         component: () => import('@/views/schema/yubiFormOp/index.vue'),

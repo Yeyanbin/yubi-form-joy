@@ -1,0 +1,79 @@
+<template>
+  <h2>this is yubiFormDemo page!</h2>
+  <yubiForm 
+    v-bind="{
+      customComponents,
+      content,
+      state,
+    }">
+  </yubiForm>  
+</template>
+
+<script setup lang="ts">
+import yubiForm from '../../../components/yubiForm/index.vue';
+import test from './test.vue';
+
+const customComponents = {
+  test,
+};
+
+const content = [
+  {
+    component: "NInput",
+    label: {
+      expression: "{type}",
+      // "value": "操作备注",
+      type: "string"
+    },
+    path: "remark"
+  },
+  {
+    component: "NSelect",
+    label: "选择歌曲",
+    path: "song",
+    options: [
+      {
+        label: "Everybody's Got Something to Hide Except Me and My Monkey",
+        value: 'song0',
+        disabled: true
+      },
+      {
+        label: 'Drive My Car',
+        value: 'song1'
+      },
+      {
+        label: 'Norwegian Wood',
+        value: 'song2'
+      },
+      {
+        label: "You Won't See",
+        value: 'song3',
+        disabled: true
+      },
+      {
+        label: 'Nowhere Man',
+        value: 'song4'
+      },
+      {
+        label: 'Think For Yourself',
+        value: 'song5'
+      },
+      {
+        label: 'The Word',
+        value: 'song6'
+      },
+    ]
+  }
+];
+
+const state = {
+  "type": "操作备注",
+  "remark": "备注test",
+  "song": "song1",
+}
+
+</script>
+
+<style scoped>
+
+</style>

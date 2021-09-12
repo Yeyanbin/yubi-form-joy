@@ -5,7 +5,10 @@ import Layout from "./layout/index.vue";
 </script>
 
 <template>
-  <Layout></Layout>
+    <!-- 调整 naive-ui 的字重配置 -->
+  <n-config-provider :theme-overrides="{ common: { fontWeightStrong: '600' } }">
+    <Layout></Layout>
+  </n-config-provider>
 </template>
 
 <style>

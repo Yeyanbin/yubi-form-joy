@@ -1,7 +1,7 @@
 
 export const handleContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
   
-  console.log('content', content);
+  // console.log('content', content);
 
   const handleNormalObject = (item) => {
     const newItem = {};
@@ -49,8 +49,8 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   }
   
   const handleExpression = (expression) => {
-    console.log(toReversePolishNotation(expression));
-    console.log(computeReversePolishNotation(toReversePolishNotation(expression)));
+    // console.log(toReversePolishNotation(expression));
+    // console.log(computeReversePolishNotation(toReversePolishNotation(expression)));
     return computeReversePolishNotation(toReversePolishNotation(expression));
   }
 
@@ -58,7 +58,7 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
 
   content.forEach(item => {
     if (item.show) {
-      const show = handleExpression(item.show); 
+      const show = handleExpression(item.show.expression) || item.show.value; 
       if (show && show !== 'false') {
         newContent.push(handleNormalObject(item));
       }

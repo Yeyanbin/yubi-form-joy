@@ -1,12 +1,12 @@
 <template>
   <h2>this is yubiFormDemo page!</h2>
-  <yubiForm 
+  <yubi-form 
     v-bind="{
       customComponents,
       content,
       state,
     }">
-  </yubiForm>  
+  </yubi-form>  
 </template>
 
 <script setup lang="ts">
@@ -82,7 +82,7 @@ const content = [
   {
     show: {
       type: 'boolean',
-      expression: '${gender} = 1'
+      expression: '{gender} = 1'
     },
     component: "NInput",
     label: "薪资多少",

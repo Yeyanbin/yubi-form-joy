@@ -62,7 +62,10 @@ export default (state, formData) => {
       key.push(expression[i]);
       ++i;
     }
-    return [state[key.join('') || formData[key.join('')]] , i];
+    // console.log('getState', state[key.join('')], formData[key.join('')]  , [state[key.join('') || formData[key.join('')]], i]);
+    let value = state[key.join('')];
+    value === undefined && (value = formData[key.join('')]);
+    return [value , i];
   }
   
   const getNumber = (expression, i) => {
@@ -132,16 +135,19 @@ export default (state, formData) => {
    * @param {Array} reversePolishNotation 上面的elementStack
    */
   const computeReversePolishNotation = (reversePolishNotation) => {
+    if(reversePolishNotation.includes(undefined)) {
+      return undefined;
+    }
+
     if (reversePolishNotation.length > 1) {
       const numberStack = [];
   
       reversePolishNotation.forEach((element) => {
-        if (typeof element === 'number') {
+        if (!operaCompute[element]) {
           numberStack.push(element);
         } else {
           numberStack.push(handleCompute(numberStack.pop(), numberStack.pop(), element));
         }
-        // console.log(numberStack)
       })
       return numberStack.pop();
     } else {

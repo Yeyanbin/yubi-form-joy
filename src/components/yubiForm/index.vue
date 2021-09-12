@@ -31,17 +31,19 @@ const emit = defineEmits(['change', 'update'])
 const formValue = ref(getDefaultFormValue(props.content, props.state));
 
 const formItemList = computed(() => {
-  console.log('handleContent')
+  console.log('handleContent, changeFormItemList')
   // const _formValue = formValue;
   return handleContent(props.content, useExpressionCompute(props.state, formValue.value))
 }, {
   onTrack: (event: DebuggerEvent) => {
-    console.log('track', event);
+    // console.log('track', event);
   },
   onTrigger: (event: DebuggerEvent) => {
-    console.log('trigger', event);
+    // console.log('trigger', event);
   }
 });
+
+// const formItemList = ref(handleContent(props.content, useExpressionCompute(props.state, formValue.value)));
 
 /**
  * 未测试
@@ -56,6 +58,7 @@ watch(formItemList, (value) => {
 
 watch(formValue.value, (value) => {
   console.log('formValueUpdate', value);
+  // formItemList.value = handleContent(props.content, useExpressionCompute(props.state, value));
   emit('update', {
     formValue: value,
     formItemList: formItemList.value,

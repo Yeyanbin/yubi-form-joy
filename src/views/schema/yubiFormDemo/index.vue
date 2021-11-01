@@ -25,12 +25,24 @@ const content = [
       // "value": "操作备注",
       type: "string"
     },
+    layout: {
+      span: {
+        value: "3",
+        type: "number",
+      }
+    },
     path: "remark"
   },
   {
     component: "NSelect",
     label: "选择歌曲",
     path: "song",
+    layout: {
+      span: {
+        value: "3",
+        type: "number",
+      }
+    },
     options: [
       {
         label: "Everybody's Got Something to Hide Except Me and My Monkey",
@@ -68,6 +80,12 @@ const content = [
     component: "NSelect",
     label: "性别",
     path: "gender",
+    layout: {
+      span: {
+        value: "1",
+        type: "number",
+      }
+    },
     options: [
       {
         label: "女",
@@ -94,6 +112,7 @@ const state = {
   "type": "操作备注",
   "remark": "备注test",
   "song": "song1",
+  "gender": 1
 }
 
 </script>

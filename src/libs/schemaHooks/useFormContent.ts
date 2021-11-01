@@ -1,5 +1,5 @@
 
-export const handleContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
+const useFormContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
   
   // console.log('content', content);
 
@@ -28,7 +28,6 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   
   /**
    * 值对象处理
-   * 考虑依赖监听的问题(先搁置)
    * @param valueObject 
    */
   const handleValueObject = (valueObject) => {
@@ -38,7 +37,8 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
     if (type ==='string') {
       computeValue = `${handleExpression(expression) || value}`;
     } else if (type === 'number') {
-      computeValue = +(handleExpression(expression) || value);
+      // console.log(expression);
+      computeValue = +(expression && handleExpression(expression) || value);
     } else if (type === 'array') {
       // computeValue = +(handleExpression(expression) || value);
     } else if (type === 'boolean') {
@@ -49,6 +49,7 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   }
   
   const handleExpression = (expression) => {
+    // console.log(expression);
     // console.log(toReversePolishNotation(expression));
     // console.log(computeReversePolishNotation(toReversePolishNotation(expression)));
     return computeReversePolishNotation(toReversePolishNotation(expression));
@@ -69,12 +70,4 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   return newContent;
 }
 
-
-export const getDefaultFormValue = (content, state) => {
-  const obj = {};
-  content.forEach((item) => {
-    obj[item.path] = state[item.path] || '';
-  });
-  console.log('default Form Value', obj);
-  return obj;
-}
+export default useFormContent;

@@ -5,20 +5,26 @@
     :rules="props.rules"
     ref="formRef"
     inline>
-    <n-form-item style="min-width: 150px;" v-for="item of formItemList" v-bind="item">
-      <component v-bind="item" :is="item.component" v-model:value="formValue[item.path]">
-        {{ item.inner }}
-      </component>
-    </n-form-item>
+    <n-grid :cols="10">
+      <n-grid-item span="2" v-bind="item.layout" v-for="item of formContent" style="padding: 5px 10px;">
+        <n-form-item v-bind="item">
+          <component v-bind="item" :is="item.component" v-model:value="formValue[item.path]">
+            {{ item.inner }}
+          </component>
+        </n-form-item>
+      </n-grid-item>
+    </n-grid>
   </n-form>
 </template>
 
 <script setup lang="ts">
 
 import { computed, DebuggerEvent, onMounted, ref, watch } from 'vue';
-import { getDefaultFormValue, handleContent } from './common';
+import { getDefaultFormValue } from '../../libs/schemaHooks/utils';
+
 import { formConfig } from './config';
-import useExpressionCompute from './hooks/useExpressionCompute';
+import useFormContent from '../../libs/schemaHooks/useFormContent';
+import useExpressionCompute from '../../libs/schemaHooks/useExpressionCompute';
 
 const props = defineProps({
   rules: Object,
@@ -30,10 +36,10 @@ const props = defineProps({
 const emit = defineEmits(['change', 'update'])
 const formValue = ref(getDefaultFormValue(props.content, props.state));
 
-const formItemList = computed(() => {
+const formContent = computed(() => {
   console.log('handleContent, changeFormItemList')
   // const _formValue = formValue;
-  return handleContent(props.content, useExpressionCompute(props.state, formValue.value))
+  return useFormContent(props.content, useExpressionCompute(props.state, formValue.value))
 }, {
   onTrack: (event: DebuggerEvent) => {
     // console.log('track', event);
@@ -45,14 +51,12 @@ const formItemList = computed(() => {
 
 // const formItemList = ref(handleContent(props.content, useExpressionCompute(props.state, formValue.value)));
 
-/**
- * 未测试
- */
-watch(formItemList, (value) => {
+
+watch(formContent, (value) => {
   console.log('formItemListUpdate', value);
   emit('change', {
     formValue: formValue.value,
-    formItemList: value,
+    formContent: value,
   });
 });
 
@@ -61,13 +65,13 @@ watch(formValue.value, (value) => {
   // formItemList.value = handleContent(props.content, useExpressionCompute(props.state, value));
   emit('update', {
     formValue: value,
-    formItemList: formItemList.value,
+    formContent: formContent.value,
   })
 })
 
 
 onMounted(() => {
-  console.log('formItemList', formItemList.value);
+  console.log('formContent', formContent.value);
 });
 
 </script>

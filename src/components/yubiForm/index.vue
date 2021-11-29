@@ -39,7 +39,8 @@ const formValue = ref(getDefaultFormValue(props.content, props.state));
 const formContent = computed(() => {
   console.log('handleContent, changeFormItemList')
   // const _formValue = formValue;
-  return useFormContent(props.content, useExpressionCompute(props.state, formValue.value))
+  const newExpressComputeValue = useExpressionCompute(props.state, formValue.value)
+  return useFormContent(props.content, newExpressComputeValue);
 }, {
   onTrack: (event: DebuggerEvent) => {
     // console.log('track', event);
@@ -51,18 +52,27 @@ const formContent = computed(() => {
 
 // const formItemList = ref(handleContent(props.content, useExpressionCompute(props.state, formValue.value)));
 
-
+/**
+ * formContent更新，给外部组件提供change钩子
+ */
 watch(formContent, (value) => {
-  console.log('formItemListUpdate', value);
+  console.log('formContentUpdate', value);
+  // formValue.value = 
   emit('change', {
     formValue: formValue.value,
     formContent: value,
   });
 });
 
+/**
+ * 表单值更新，提供update钩子
+ */
 watch(formValue.value, (value) => {
   console.log('formValueUpdate', value);
-  // formItemList.value = handleContent(props.content, useExpressionCompute(props.state, value));
+
+  const newFormContentValue = useFormContent(props.content, useExpressionCompute(props.state, value));
+  console.log('form content', newFormContentValue);
+  // formContent.value = handleContent(props.content, useExpressionCompute(props.state, value));
   emit('update', {
     formValue: value,
     formContent: formContent.value,

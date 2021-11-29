@@ -1,13 +1,8 @@
 
-
 interface IOptions {
   otherOperators?: any;
 }
 
-// type TUseExpressionCompute = (state: any, formData: any, opt: IOptions) => {
-//   toReversePolishNotation: (expression: any) => any[];
-//   computeReversePolishNotation: (reversePolishNotation: any) => any;
-// } & any;
 
 export default (state, formData, opt: IOptions = {}) => {
   const operaLevelMap = {
@@ -100,9 +95,7 @@ export default (state, formData, opt: IOptions = {}) => {
       key.push(expression[i]);
       ++i;
     }
-    // console.log('getState', state[key.join('')], formData[key.join('')]  , [state[key.join('') || formData[key.join('')]], i]);
-    let value = state[key.join('')];
-    value === undefined && (value = formData[key.join('')]);
+    let value = formData[key.join('')] !== undefined? formData[key.join('')] : state[key.join('')];
     return [value , i];
   }
   
@@ -196,14 +189,11 @@ export default (state, formData, opt: IOptions = {}) => {
           // 如果是运算符，则弹出两个number出来运算，[1, 1], +, 运算 1+1
           numberStack.push(handleCompute(numberStack.pop(), numberStack.pop(), element));
         }
-        // console.log(numberStack)
       })
-      // console.log(numberStack)
 
       return numberStack.pop();
     } else {
-      // console.log(reversePolishNotation);
-      // const res = reversePolishNotation.pop();
+
       return reversePolishNotation.pop();
     }
   }

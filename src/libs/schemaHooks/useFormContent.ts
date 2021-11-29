@@ -1,8 +1,11 @@
 
 const useFormContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
   
-  // console.log('content', content);
-
+  /**
+   * 深拷贝处理一个item的所有属性
+   * @param item content中的某一行
+   * @returns 
+   */
   const handleNormalObject = (item) => {
     const newItem = {};
     
@@ -19,6 +22,7 @@ const useFormContent = (content: Array<any>, { toReversePolishNotation, computeR
           // 查看是否带有value或者expression属性，是则认为其是值对象
           newItem[key] = handleValueObject(item[key]);
         } else {
+          // 继续深拷贝
           newItem[key] = handleNormalObject(item[key]);
         }
       }
@@ -59,11 +63,14 @@ const useFormContent = (content: Array<any>, { toReversePolishNotation, computeR
 
   content.forEach(item => {
     if (item.show) {
+      // 处理show
       const show = handleExpression(item.show.expression) || item.show.value; 
       if (show && show !== 'false') {
+        console.log('show');
         newContent.push(handleNormalObject(item));
       }
     } else {
+      // 普通情况
       newContent.push(handleNormalObject(item));
     }
   });

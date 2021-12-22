@@ -60,6 +60,15 @@ const routes: Array<RouteRecordRaw> = [
       icon: renderIcon(LogInOutline)
     },
   },
+  {
+    path: '/textAnime',
+    name: 'textAnime',
+    component: () => import('@/views/textAnime/index.vue'),
+    meta: {
+      title: '文本动画',
+      icon: renderIcon(LogInOutline)
+    },
+  },
 ]
 
 

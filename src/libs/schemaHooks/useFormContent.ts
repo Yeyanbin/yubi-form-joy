@@ -1,8 +1,11 @@
 
-export const handleContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
+const useFormContent = (content: Array<any>, { toReversePolishNotation, computeReversePolishNotation }) => {
   
-  // console.log('content', content);
-
+  /**
+   * 深拷贝处理一个item的所有属性
+   * @param item content中的某一行
+   * @returns 
+   */
   const handleNormalObject = (item) => {
     const newItem = {};
     
@@ -19,6 +22,7 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
           // 查看是否带有value或者expression属性，是则认为其是值对象
           newItem[key] = handleValueObject(item[key]);
         } else {
+          // 继续深拷贝
           newItem[key] = handleNormalObject(item[key]);
         }
       }
@@ -28,7 +32,6 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   
   /**
    * 值对象处理
-   * 考虑依赖监听的问题(先搁置)
    * @param valueObject 
    */
   const handleValueObject = (valueObject) => {
@@ -38,7 +41,8 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
     if (type ==='string') {
       computeValue = `${handleExpression(expression) || value}`;
     } else if (type === 'number') {
-      computeValue = +(handleExpression(expression) || value);
+      // console.log(expression);
+      computeValue = +(expression && handleExpression(expression) || value);
     } else if (type === 'array') {
       // computeValue = +(handleExpression(expression) || value);
     } else if (type === 'boolean') {
@@ -49,6 +53,7 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
   }
   
   const handleExpression = (expression) => {
+    // console.log(expression);
     // console.log(toReversePolishNotation(expression));
     // console.log(computeReversePolishNotation(toReversePolishNotation(expression)));
     return computeReversePolishNotation(toReversePolishNotation(expression));
@@ -58,23 +63,18 @@ export const handleContent = (content: Array<any>, { toReversePolishNotation, co
 
   content.forEach(item => {
     if (item.show) {
+      // 处理show
       const show = handleExpression(item.show.expression) || item.show.value; 
       if (show && show !== 'false') {
+        console.log('show');
         newContent.push(handleNormalObject(item));
       }
     } else {
+      // 普通情况
       newContent.push(handleNormalObject(item));
     }
   });
   return newContent;
 }
 
-
-export const getDefaultFormValue = (content, state) => {
-  const obj = {};
-  content.forEach((item) => {
-    obj[item.path] = state[item.path] || '';
-  });
-  console.log('default Form Value', obj);
-  return obj;
-}
+export default useFormContent;

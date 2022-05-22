@@ -16,6 +16,15 @@ const routes: Array<RouteRecordRaw> = [
     },    
   },
   {
+    path: '/demo',
+    name: 'demo',
+    component: () => import('@/views/demo/index.vue'),
+    meta: {
+      title: 'DEMO',
+      icon: renderIcon(HomeOutline)
+    },    
+  },
+  {
     path: '/schema',
     name: '表单',
     redirect: '/schema/op',

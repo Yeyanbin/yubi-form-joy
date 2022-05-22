@@ -5,11 +5,12 @@
     :rules="props.rules"
     ref="formRef"
     inline>
-    <n-form-item style="min-width: 150px;" v-for="item of formItemList" v-bind="item">
+    <n-form-item style="min-width: 150px; max-width: 50%;" v-for="item of formItemList" v-bind="item">
       <component v-bind="item" :is="item.component" v-model:value="formValue[item.path]">
         {{ item.inner }}
       </component>
     </n-form-item>
+
   </n-form>
 </template>
 
@@ -31,7 +32,7 @@ const emit = defineEmits(['change', 'update'])
 const formValue = ref(getDefaultFormValue(props.content, props.state));
 
 const formItemList = computed(() => {
-  console.log('handleContent, changeFormItemList')
+  console.log('handleContent, changeForm')
   // const _formValue = formValue;
   return handleContent(props.content, useExpressionCompute(props.state, formValue.value))
 }, {
@@ -45,9 +46,6 @@ const formItemList = computed(() => {
 
 // const formItemList = ref(handleContent(props.content, useExpressionCompute(props.state, formValue.value)));
 
-/**
- * 未测试
- */
 watch(formItemList, (value) => {
   console.log('formItemListUpdate', value);
   emit('change', {

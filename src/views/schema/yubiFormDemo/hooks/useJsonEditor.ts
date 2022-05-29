@@ -3,8 +3,8 @@ import JSONEditor from 'jsoneditor';
 import { ref } from 'vue';
 
 
-const useJsonEditor = (initialJson) => {
-  const container = document.getElementById("jsoneditor")
+const useJsonEditor = (id: string, initialJson = {}) => {
+  const container = document.getElementById(id)
   const options = {
     onChangeText: (jsonString) => {
       jsonValue.value = jsonString;

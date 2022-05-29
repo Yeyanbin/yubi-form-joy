@@ -10,7 +10,8 @@
   "dependencies": {
     "@vicons/antd": "^0.10.0",
     "@vicons/ionicons5": "^0.10.0",
-    "jsoneditor": "^9.5.5",
+    "highlight": "^0.2.4",
+    "jsoneditor": "^9.7.4",
     "mockjs": "^1.1.0",
     "naive-ui": "^2.16.7",
     "vue": "^3.2.6",

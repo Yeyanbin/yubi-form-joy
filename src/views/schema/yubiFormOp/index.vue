@@ -1,9 +1,10 @@
 <template>
-  <h2>this is yubiFormOp page!</h2>
+  <SchemaList></SchemaList>
 </template>
 
 <script setup lang="ts">
 
+import SchemaList from './SchemaList.vue';
 
 </script>
 

@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import Layout from "./layout/index.vue";
+import hljs from 'highlight.js/lib/core'
+import json from 'highlight.js/lib/languages/json'
+
+  hljs.registerLanguage('json', json)
+
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
 
 <template>
     <!-- 调整 naive-ui 的字重配置 -->
-  <n-config-provider :theme-overrides="{ common: { fontWeightStrong: '600' } }">
+  <n-config-provider :theme-overrides="{ common: { fontWeightStrong: '600' } }" :hljs="hljs">
     <Layout></Layout>
   </n-config-provider>
 </template>
@@ -16,7 +21,7 @@ import Layout from "./layout/index.vue";
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   /* margin-top: 60px; */
 }

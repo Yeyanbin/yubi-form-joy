@@ -3,6 +3,7 @@ import {
   create,
   // component
   NButton,
+  NButtonGroup,
   NCard,
   NAvatar,
   NDivider,
@@ -24,7 +25,6 @@ import {
   NLayoutSider,
   NLayoutContent,
   NConfigProvider,
-  // form component
   NForm,
   NFormItem,
   NAutoComplete,
@@ -37,11 +37,18 @@ import {
   NSelect,
   NSwitch,
   NTimePicker,
+  NCollapse,
+  NCollapseItem,
+  NText,
+  NDrawer,
+  NDrawerContent,
+  NScrollbar,
 } from 'naive-ui'
 
 export default create({
   components: [
-    NButton, 
+    NButton,
+    NButtonGroup,
     NCard,
     NAvatar,
     NDivider,
@@ -75,6 +82,12 @@ export default create({
     NLayoutSider,
     NLayoutContent,
     NConfigProvider,
+    NCollapse,
+    NCollapseItem,
+    NText,
+    NDrawer,
+    NDrawerContent,
+    NScrollbar
   ]
 });
 

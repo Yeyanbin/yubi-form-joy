@@ -129,7 +129,7 @@ export const itemEditContent: ISchemaItem[] = [
     path: 'layoutOffset',
     label: '偏移',
     max: 10,
-    min: 1,
+    min: 0,
     defaultValue: 2,
     style: {
       width: '100%'

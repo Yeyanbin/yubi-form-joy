@@ -13,18 +13,23 @@ const useFormContent = (content: Array<any>, { toReversePolishNotation, computeR
       if (typeof item[key] === 'string') {
         // 发现一个值其是字符串
         newItem[key] = item[key];
+      } else if (typeof item[key] === 'number') {
+        newItem[key] = item[key];
       } else if(Array.isArray(item[key])) {
         // 是数组
         newItem[key] = item[key];
-      } else {
+      } else if (typeof item[key] === 'object') {
         // 发现一个值其是对象
-        if (item[key].type && item[key].value !== undefined || item[key].expression !== undefined) {
+        if (item[key].value !== undefined || item[key].expression !== undefined) {
           // 查看是否带有value或者expression属性，是则认为其是值对象
           newItem[key] = handleValueObject(item[key]);
         } else {
           // 继续深拷贝
           newItem[key] = handleNormalObject(item[key]);
         }
+      } else {
+        // 兜底
+        newItem[key] = item[key];
       }
     })
     return newItem;
@@ -35,21 +40,20 @@ const useFormContent = (content: Array<any>, { toReversePolishNotation, computeR
    * @param valueObject 
    */
   const handleValueObject = (valueObject) => {
-    const { type, value, expression } = valueObject;
-    let computeValue = undefined;
+    const { value, expression } = valueObject;
   
-    if (type ==='string') {
-      computeValue = `${handleExpression(expression) || value}`;
-    } else if (type === 'number') {
-      // console.log(expression);
-      computeValue = +(expression && handleExpression(expression) || value);
-    } else if (type === 'array') {
-      // computeValue = +(handleExpression(expression) || value);
-    } else if (type === 'boolean') {
-      computeValue = handleExpression(expression) || value;
-      computeValue = computeValue === 'false' ? false : Boolean(computeValue);
-    }
-    return computeValue;
+    // if (type ==='string') {
+    //   computeValue = `${handleExpression(expression) || value}`;
+    // } else if (type === 'number') {
+    //   // console.log(expression);
+    //   computeValue = +(expression && handleExpression(expression) || value);
+    // } else if (type === 'array') {
+    //   // computeValue = +(handleExpression(expression) || value);
+    // } else if (type === 'boolean') {
+    //   computeValue = handleExpression(expression) || value;
+    //   computeValue = computeValue === 'false' ? false : Boolean(computeValue);
+    // }
+    return expression && handleExpression(expression) || value;
   }
   
   const handleExpression = (expression) => {

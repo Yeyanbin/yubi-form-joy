@@ -1,18 +1,18 @@
-type ValueType = "string" | "number" | "boolean" | "array" | unknown;
+type ValueType = string | number | boolean | any[];
 
-interface IExpression<T extends ValueType = unknown> {
-  expression?: string;
-  type: T;
-  value?: string;
+interface IExpression<T extends ValueType> {
+  expression: string;
+  value?: T;
 }
 
 interface ISchemaItem {
-  label?: string | IExpression<"string">,
+  label?: string | IExpression<string>,
   layout?: {
-    span: number | IExpression<"number">;
+    span: number | IExpression<number>;
+    offset?: number | IExpression<number>;
   },
-  path?: string | IExpression<"string">;
+  path?: string | IExpression<string>;
   component: string,
-  [key: string]: ValueType | IExpression;
+  [key: string]: any | IExpression<ValueType>;
 }
 

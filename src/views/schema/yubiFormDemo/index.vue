@@ -44,6 +44,9 @@ const defaultState = `{
 const defaultFormContent = 
 `[
   {
+    "component": "test"
+  },
+  {
     "component": "div",
     "inner": "这是一个div"
   },

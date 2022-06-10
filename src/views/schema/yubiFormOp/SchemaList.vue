@@ -1,100 +1,166 @@
 
 <template>
-  <n-scrollbar style="width: 600px;height: 80vh;">
-    <n-card title="表单内容项">
-      <n-collapse>
-        <template v-for="item, index of schemaList">
-          <n-collapse-item :name="index" class="schema-item-wrap">
-            <template #header>
-              <template v-for="param in ['component', 'label', 'path']">
-                <n-text v-if="typeof item[param] !== 'object' && item[param] !== undefined">
-                  {{`${item[param]}-`}}
+  <div class="schema-opr-wrap">  
+    <n-card title="表单项编辑" :contentStyle="'padding: 0'" header-style="height: 50px">
+      <n-scrollbar style="height: 70vh;">
+        <n-collapse class="opr-content-list-wrap">
+          <template v-for="item, index of schemaList">
+            <n-collapse-item :name="index" class="schema-item-wrap">
+              <template #header>
+                <n-text>
+                  {{['component', 'label', 'path'].filter((key) => typeof item[key] === 'string').map((key) => item[key]).join('-')}}
                 </n-text>
               </template>
-            </template>
-            <template #header-extra>
-              <n-button-group size="small">
-                <n-button type="primary" round @click.stop="() => activate(item, index)">
-                  修改
-                </n-button>
-                <n-button type="error">
-                  删除
-                </n-button>
-                <n-button type="default">
-                  复制
-                </n-button>
-              </n-button-group>
-            </template>
+              <template #header-extra>
+                <n-button-group size="small">
+                  <n-button type="primary" round @click.stop="() => activate(item, index)">
+                    修改
+                  </n-button>
+                  <n-button type="error">
+                    删除
+                  </n-button>
+                  <n-button type="default">
+                    复制
+                  </n-button>
+                </n-button-group>
+              </template>
 
-            <n-code :code="`{\n${transContentArray(item).join('')}}`" language="json" />
-          </n-collapse-item>
-        </template>
+              <n-code :code="`{\n${transContentArray(item).join('')}}`" language="json" />
+            </n-collapse-item>
+          </template>
 
-      </n-collapse>
+        </n-collapse>
+      </n-scrollbar>
+      <n-card title="表单初始状态编辑" :contentStyle="'padding: 0 10px'" header-style="height: 50px">
+        <div class="opr-state-wrap">
+          <div>
+            <n-button @click="updateOprState">
+              保存
+            </n-button>
+          </div>
+          <n-input style="height: calc(30vh - 110px)" type="textarea" v-model:value="oprPreviewStateModify"></n-input>
+        </div>
+      </n-card>
     </n-card>
-  </n-scrollbar>
+    <n-card title="表单预览">
+      <YubiForm :config="oprConfig" :content="schemaList" :state="oprPreviewState">
+      </YubiForm>
+    </n-card>
+  </div>
+
   <n-drawer v-model:show="active" placement="right" width="calc(100vw - 600px)">
     <n-drawer-content>
-      {{modifyIndex}}
-      {{modifyData}}
+      <YubiForm :config="oprConfig" :customComponents="customComponents" :content="itemEditContent" @update="updateFormValue" :state="oprFormState"></YubiForm>
+      <div>
+        {{oprFormValue}}
+      </div>
+      <NCard title="预览">
+        <template #header-extra>
+          <NButton @click="preview">更新预览</NButton>
+          <NButton type="primary" @click="save">保存</NButton>
+        </template>
+        <YubiForm v-if="previewShowState" :config="oprConfig" :content="previewContent"></YubiForm>
+      </NCard>
     </n-drawer-content>
   </n-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { schemaContent } from './config';
+import { itemEditContent, schemaContent } from './config';
+import YubiForm from '../../../components/yubiForm/index.vue';
+import ExpressionWrap from './components/ExpressionWrap.vue';
 
-const active = ref(false)
-const activate = (item: ISchemaItem, index: number) => {
-  active.value = true;
-  modifyData.value = item;
-  modifyIndex.value = index;
-};
+const active = ref(false);
 const modifyData = ref<ISchemaItem>();
 const modifyIndex = ref<number>();
 const schemaList = ref<ISchemaItem[]>(schemaContent);
 
-const testObj = {
-  component: "NInput",
-  label: {
-    expression: "{type}",
-    type: "string"
-  },
-  type: "textarea",
-  layout: {
-    span: {
-      value: "5",
-      type: "number"
-    }
-  },
-  path: "remark",
-  test: "testValue",
-  number: 1,
-  testArray: [
-    {
-      label: "Drive My Car",
-      value: "song1"
-    },
-    {
-      label: "Norwegian Wood",
-      value: "song2"
-    },
-    {
-      label: "You Won't See",
-      value: "song3",
-      disabled: true
-    },
-    {
-      label: "Nowhere Man",
-      value: "song4"
-    },
-    {
-      label: "Think For Yourself",
-      value: "song5"
-    }
-  ]
+const defaultState = `{
+  "type": "操作备注",
+  "remark": "备注test",
+  "song": "song1",
+  "gender": 1
+}`;
+const oprPreviewStateModify = ref(defaultState);
+const oprPreviewState = ref(JSON.parse(defaultState));
+
+const customComponents = {
+  ExpressionWrap,
+};
+
+const updateOprState = () => {
+  try {
+    oprPreviewState.value = JSON.parse(oprPreviewStateModify.value);
+  } catch(err) {
+    console.error('json不合法')
+  }
 }
+
+const activate = (item: ISchemaItem, index: number) => {
+  console.log('activate', item);
+  active.value = true;
+  modifyData.value = item;
+  modifyIndex.value = index;
+
+  const transFormState = {
+    layoutSpan: item.layout?.span ?? 5,
+    layoutOffset: item.layout?.offset ?? 0,
+  };
+
+  oprFormState.value = {
+    ...item,
+    ...transFormState
+  };
+  updateFormValue(oprFormState.value);
+  preview();
+};
+
+
+const oprConfig = {
+  // labelPlacement: "left",
+  labelWidth: '80px',
+};
+const oprFormState = ref();
+const oprFormValue = ref();
+const updateFormValue = (value) => {
+  oprFormValue.value = value;
+}
+
+const previewShowState = ref(false);
+const previewContent = ref();
+const preview = () => {
+  previewShowState.value = true;
+  previewContent.value = [getOprFormData()];
+};
+
+const save = () => {
+  const originSchemaList = schemaList.value;
+  originSchemaList[modifyIndex.value] = getOprFormData();
+
+  schemaList.value = originSchemaList;
+};
+
+const getOprFormData = () => {
+  const data = {
+    ...oprFormValue.value,
+    layout: {
+      span: oprFormValue.value.layoutSpan,
+      offset: oprFormValue.value.layoutOffset,
+    }
+  };
+  delete data.layoutSpan;
+  delete data.layoutOffset;
+
+  Object.keys(data).forEach(key => {
+    if (data[key] === '') {
+      delete data[key];
+    }
+  })
+
+  console.log('getOprFormData', data);
+  return data;
+};
 
 
 const DEFAULT_TAB = '  ';
@@ -158,5 +224,19 @@ ref();
 .schema-item-warp {
   border: 1px solid rgb(239, 239, 245);
   padding: 5px 10px;
+}
+
+.opr-content-list-wrap {
+  border: 1px solid rgb(239, 239, 245);
+  padding: 10px 10px;
+  width: auto;
+}
+
+.schema-opr-wrap {
+  display: flex;
+}
+
+.opr-state-wrap {
+  display: flex;
 }
 </style>

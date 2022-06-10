@@ -3,10 +3,7 @@ import Layout from "./layout/index.vue";
 import hljs from 'highlight.js/lib/core'
 import json from 'highlight.js/lib/languages/json'
 
-  hljs.registerLanguage('json', json)
-
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+hljs.registerLanguage('json', json)
 </script>
 
 <template>

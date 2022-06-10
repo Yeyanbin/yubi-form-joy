@@ -43,9 +43,11 @@ import {
   NDrawer,
   NDrawerContent,
   NScrollbar,
-} from 'naive-ui'
+  NInputNumber,
+  NRadioGroup,
+} from 'naive-ui';
 
-export default create({
+export const naiveUIInstance = create({
   components: [
     NButton,
     NButtonGroup,
@@ -72,6 +74,7 @@ export default create({
     NInput,
     NMention,
     NRadio,
+    NRadioGroup,
     NRate,
     NSelect,
     NSwitch,
@@ -87,7 +90,8 @@ export default create({
     NText,
     NDrawer,
     NDrawerContent,
-    NScrollbar
+    NScrollbar,
+    NInputNumber,
   ]
 });
 

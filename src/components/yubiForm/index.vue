@@ -1,6 +1,9 @@
 <template>
   <n-form
-    v-bind="formConfig"
+    v-bind="{
+      ...formConfig,
+      ...props.config,
+    }"
     :model="formValue"
     :rules="props.rules"
     ref="formRef"
@@ -8,8 +11,13 @@
     <n-grid :cols="10">
       <n-grid-item span="2" v-bind="item.layout" v-for="item of formContent" style="padding: 5px 10px;">
         <n-form-item v-bind="item" :prop="item.path">
-          <component v-bind="item" :is="item.component" v-model:value="formValue[item.path]">
+          <component v-bind="item" :is="props.customComponents[item.component] ?? item.component" v-model:value="formValue[item.path]" :updateValue="(v) => updateValue(item.path, v)">
             {{ item.inner }}
+            <template v-for="child of item.childList">
+              <component :is="child.component" v-bind="child">
+                {{ child.inner }}
+              </component>
+            </template>
           </component>
         </n-form-item>
       </n-grid-item>
@@ -26,12 +34,22 @@ import { formConfig } from './config';
 import useFormContent from '../../libs/schemaHooks/useFormContent';
 import useExpressionCompute from '../../libs/schemaHooks/useExpressionCompute';
 
-const props = defineProps({
-  rules: Object,
-  content: Array,
-  state: Object,
-  customComponents: Object,
-})
+import { FormRules } from 'naive-ui';
+
+interface IProps {
+  rules?: FormRules,
+  content: ISchemaItem[],
+  state?: Object,
+  customComponents?: Object,
+  config?: Object,
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  rules: () => ({}),
+  state: () => ({}),
+  customComponents: () => ({}),
+  config: () => ({}),
+});
 
 const emit = defineEmits(['change', 'update'])
 const formValue = ref(getDefaultFormValue(props.content, props.state));
@@ -40,6 +58,12 @@ watch(props, () => {
   console.log('watch')
   formValue.value = getDefaultFormValue(props.content, props.state);
 });
+
+const updateValue = (path, v) => {
+  const data = formValue.value;
+  data[path] = v;
+  formValue.value = data;
+};
 
 const formContent = computed(() => {
   console.log('handleContent, changeFormItemList')

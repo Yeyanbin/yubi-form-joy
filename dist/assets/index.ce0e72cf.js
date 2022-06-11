@@ -1,0 +1,1 @@
+import{d as a,ag as e,r as n,o,b as s,w as t,a9 as r}from"./vendor.4a9bd4b3.js";const d=a({components:{NThemeEditor:e}}),l=r("div",null,"aa",-1);d.render=function(a,e,r,d,u,i){const m=n("n-theme-editor");return o(),s(m,null,{default:t((()=>[l])),_:1})};export{d as default};

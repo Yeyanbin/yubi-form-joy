@@ -14,11 +14,11 @@
   </n-radio-group>
   <template v-if="state === ValueStateMap.EXPRESSION">
     <n-card>
-        <YubiForm :config="oprConfig" :content="expressionEditContent" @update="onUpdateValue" :state="value"></YubiForm>
+        <YubiForm :config="oprConfig" :content="expressionEditContent" @update="onUpdateValue"></YubiForm>
     </n-card>
   </template>
   <template v-else>
-    <component :is="innerComponent" v-bind="innerAttr" v-model:value="value" @update:value="onUpdateValue"></component>
+    <component :is="innerComponent" v-bind="innerAttr" v-model:value="componentValue" @update:value="onUpdateValue"></component>
   </template>
 </template>
 
@@ -42,6 +42,8 @@ const { innerComponent, innerAttr, value } = withDefaults(defineProps<Props>(), 
   value: ''
 });
 
+const componentValue = ref(value);
+
 
 const emit = defineEmits(['updateValue', 'update:value'])
 
@@ -52,7 +54,7 @@ const ValueStateMap = {
 const state = ref(typeof value === 'object' ? ValueStateMap.EXPRESSION : ValueStateMap.NORMAL_VALUE);
 
 const onUpdateValue = (v) => {
-  emit('update:value', v);
+  emit('updateValue', v);
 }
 
 </script>

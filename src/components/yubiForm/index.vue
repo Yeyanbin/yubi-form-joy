@@ -11,7 +11,7 @@
     <n-grid :cols="10">
       <n-grid-item span="2" v-bind="item.layout" v-for="item of formContent" style="padding: 5px 10px;">
         <n-form-item v-bind="item" :prop="item.path">
-          <component v-bind="item" :is="props.customComponents[item.component] ?? item.component" v-model:value="formValue[item.path]" :updateValue="(v) => updateValue(item.path, v)">
+          <component v-bind="item" :is="props.customComponents[item.component] ?? item.component" v-model:value="formValue[item.path]" @updateValue="(v) => updateValue(item.path, v)">
             {{ item.inner }}
             <template v-for="child of item.childList">
               <component :is="child.component" v-bind="child">

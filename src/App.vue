@@ -9,7 +9,9 @@ hljs.registerLanguage('json', json)
 <template>
     <!-- 调整 naive-ui 的字重配置 -->
   <n-config-provider :theme-overrides="{ common: { fontWeightStrong: '600' } }" :hljs="hljs">
-    <Layout></Layout>
+    <n-message-provider>
+      <Layout></Layout>
+    </n-message-provider>
   </n-config-provider>
 </template>
 

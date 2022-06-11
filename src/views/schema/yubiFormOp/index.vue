@@ -8,7 +8,7 @@
             <n-collapse-item :name="index" class="schema-item-wrap">
               <template #header>
                 <n-text>
-                  {{['component', 'label', 'path'].filter((key) => typeof item[key] === 'string').map((key) => item[key]).join('-')}}
+                  {{getSchemaItemName(item)}}
                 </n-text>
               </template>
               <template #header-extra>
@@ -70,6 +70,9 @@ import { ref } from 'vue';
 import { itemEditContent, schemaContent } from './config';
 import YubiForm from '../../../components/yubiForm/index.vue';
 import ExpressionWrap from './components/ExpressionWrap.vue';
+import { useMessage } from 'naive-ui';
+
+const message = useMessage();
 
 const active = ref(false);
 const modifyData = ref<ISchemaItem>();
@@ -116,6 +119,10 @@ const activate = (item: ISchemaItem, index: number) => {
   preview();
 };
 
+const close = () => {
+  active.value = false;
+}
+
 
 const oprConfig = {
   // labelPlacement: "left",
@@ -139,6 +146,9 @@ const save = () => {
   originSchemaList[modifyIndex.value] = getOprFormData();
 
   schemaList.value = originSchemaList;
+
+  message.success(`修改第${modifyIndex.value + 1}个表单项配置成功`)
+  close();
 };
 
 const getOprFormData = () => {
@@ -162,6 +172,7 @@ const getOprFormData = () => {
   return data;
 };
 
+const getSchemaItemName = (item) => (['component', 'label', 'path'].filter((key) => typeof item[key] === 'string').map((key) => item[key]).join('-'));
 
 const DEFAULT_TAB = '  ';
 const getTabString = (time = 1) => {

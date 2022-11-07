@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vicons/antd": "^0.10.0",
+    "@vicons/ionicons4": "^0.12.0",
     "@vicons/ionicons5": "^0.10.0",
     "highlight": "^0.2.4",
     "jsoneditor": "^9.7.4",

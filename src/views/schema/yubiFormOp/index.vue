@@ -50,6 +50,9 @@
 
   <n-drawer v-model:show="active" placement="right" width="calc(100vw - 600px)">
     <n-drawer-content>
+      <div>
+
+      </div>
       <YubiForm :config="oprConfig" :customComponents="customComponents" :content="itemEditContent" @update="updateFormValue" :state="oprFormState"></YubiForm>
       <div>
         {{oprFormValue}}
@@ -98,7 +101,7 @@ const updateOprState = () => {
   } catch(err) {
     console.error('json不合法')
   }
-}
+};
 
 const activate = (item: ISchemaItem, index: number) => {
   console.log('activate', item);

@@ -43,7 +43,7 @@ const originText = ref(
 
 const content = ref<ITextLine[]>([]);
 
-const run = () => {
+const run = () => () => {
   content.value = [];
 
   textLoading(originText.value,

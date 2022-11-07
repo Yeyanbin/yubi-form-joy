@@ -45,6 +45,7 @@ import {
   NScrollbar,
   NInputNumber,
   NRadioGroup,
+  NAlert,
 } from 'naive-ui';
 
 export const naiveUIInstance = create({
@@ -92,6 +93,7 @@ export const naiveUIInstance = create({
     NDrawerContent,
     NScrollbar,
     NInputNumber,
+    NAlert,
   ]
 });
 

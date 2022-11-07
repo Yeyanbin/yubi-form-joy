@@ -76,7 +76,7 @@ import dragBlockVue from './dragBlock.vue';
 import { IosAirplane } from '@vicons/ionicons4'
 import { NCard } from 'naive-ui';
 import { ref, onMounted } from 'vue';
-import { useDrag, getComponentDataKey } from '../../libs/yubiDrag/index';
+import { useDrag, getComponentDataKey } from 'yubidrag/index';
 
 const test = 'unchecked';
 

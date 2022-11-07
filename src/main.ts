@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { naiveUIInstance } from './naiveComponentsConfig';
 
-import yubiDrag from './libs/yubiDrag';
+import yubiDrag from 'yubidrag/index';
 import router from './router';
 
 // 通用字体

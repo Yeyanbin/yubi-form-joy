@@ -82,8 +82,14 @@ const routes: Array<RouteRecordRaw> = [
   },
 ]
 
+const getUrlPrefix = () => {
+  return import.meta.env.VITE_PUBLIC_PATH;
+}
 
 
+routes.forEach((item) => {
+  item.path = getUrlPrefix() + item.path.slice(1)
+})
 
 const router = createRouter({
   history: createWebHistory(),

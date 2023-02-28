@@ -27,6 +27,17 @@ if (window.__POWERED_BY_WUJIE__) {
     instance.use(yubiDrag, {
       test: '测试options'
     });
+    instance.use((req, res, next) => {
+      // 路径判断等等
+      res.set({
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": req.headers.origin || "*",
+        "Access-Control-Allow-Headers": "X-Requested-With,Content-Type",
+        "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
+        "Content-Type": "application/json; charset=utf-8",
+      });
+      // 其他操作
+    })
     instance.use(naiveUIInstance);
     instance.mount("#app");
   };

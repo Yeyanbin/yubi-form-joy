@@ -59,9 +59,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       host: true,
       port: VITE_PORT,
       proxy: createProxy(VITE_PROXY),
-      cors: {
-        origin: "*",
-      },
+      cors: true,
       // proxy: {
       //     '/api': {
       //         target: '',

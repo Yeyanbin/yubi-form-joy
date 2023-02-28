@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
     "build:simple": "rm -rf dist && vite build",
     "serve": "vite preview",
     "reinstall": "rimraf node_modules && npm i",

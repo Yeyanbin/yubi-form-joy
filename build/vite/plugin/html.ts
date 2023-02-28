@@ -31,7 +31,7 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
             {
               tag: 'script',
               attrs: {
-                src: getAppConfigSrc(),
+                // src: getAppConfigSrc(),
               },
             },
           ]

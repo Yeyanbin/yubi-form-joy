@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from 'vue';
 import yubiForm from "../../components/yubiForm/index.vue";
-import { bus } from "wujie";
 
 const content: ISchemaItem[] = [
   {

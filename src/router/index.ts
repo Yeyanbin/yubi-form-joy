@@ -1,5 +1,5 @@
 
-import { createWebHashHistory, createRouter, RouteRecordRaw } from 'vue-router';
+import { createRouter, RouteRecordRaw, createWebHistory } from 'vue-router';
 
 import { LogInOutline, HomeOutline, FolderOutline } from '@vicons/ionicons5';
 import { renderIcon } from './common';
@@ -86,7 +86,7 @@ const routes: Array<RouteRecordRaw> = [
 
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 })
 router.beforeEach(handleGuard);

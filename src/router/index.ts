@@ -51,13 +51,24 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
+  // {
+  //   path: '/schema',
+  //   name: '表单',
+  //   component: () => import('@/views/login/index.vue'),
+  //   meta: {
+  //     title: '登录页',
+  //     icon: renderIcon(LogInOutline),
+  //     isSingle: true,
+  //   },
+  // },
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
     meta: {
       title: '登录页',
-      icon: renderIcon(LogInOutline)
+      icon: renderIcon(LogInOutline),
+      isSingle: true,
     },
   },
   {
@@ -66,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/textAnime/index.vue'),
     meta: {
       title: '文本动画',
-      icon: renderIcon(LogInOutline)
+      icon: renderIcon(LogInOutline),
     },
   },
 ]

@@ -4,9 +4,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build:simple": "rimraf dist && vite build",
+    "build:simple": "rm -rf dist && vite build",
     "serve": "vite preview",
-    "reinstall": "rimraf node_modules && npm i"
+    "reinstall": "rimraf node_modules && npm i",
+    "deploy": "./scripts/autoDeploy.sh"
   },
   "dependencies": {
     "@vicons/antd": "^0.10.0",
@@ -19,13 +20,14 @@
     "pinyin": "^2.10.2",
     "vue": "^3.2.36",
     "vue-router": "^4.0.11",
+    "wujie": "^1.0.6",
     "yubidrag": "^1.0.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
-    "@vitejs/plugin-vue": "^1.6.0",
-    "@vitejs/plugin-vue-jsx": "^1.1.5",
+    "@vitejs/plugin-vue": "1.6.0",
+    "@vitejs/plugin-vue-jsx": "1.1.5",
     "@vue/compiler-sfc": "^3.2.36",
     "dotenv": "^10.0.0",
     "sass": "^1.52.1",

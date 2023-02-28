@@ -70,7 +70,7 @@ const useFormContent = (content: Array<any>, { toReversePolishNotation, computeR
       // 处理show
       const show = handleExpression(item.show.expression) || item.show.value; 
       if (show && show !== 'false') {
-        console.log('show');
+        // console.log('show');
         newContent.push(handleNormalObject(item));
       }
     } else {

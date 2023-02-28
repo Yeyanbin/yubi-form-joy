@@ -9,7 +9,7 @@
     ref="formRef"
     inline>
     <n-grid :cols="10">
-      <n-grid-item span="2" v-bind="item.layout" v-for="item of formContent" style="padding: 5px 10px;">
+      <n-grid-item span="10" v-bind="item.layout" v-for="item of formContent" style="padding: 5px 10px;">
         <n-form-item v-bind="item" :prop="item.path">
           <component v-bind="item" :is="props.customComponents[item.component] ?? item.component" v-model:value="formValue[item.path]" @updateValue="(v) => updateValue(item.path, v)">
             {{ item.inner }}
@@ -66,7 +66,7 @@ const updateValue = (path, v) => {
 };
 
 const formContent = computed(() => {
-  console.log('handleContent, changeFormItemList')
+  // console.log('handleContent, changeFormItemList')
   const newExpressComputeValue = useExpressionCompute(props.state, formValue.value)
   return useFormContent(props.content, newExpressComputeValue);
 }, {
@@ -82,7 +82,7 @@ const formContent = computed(() => {
  * formContent更新，给外部组件提供change钩子
  */
 watch(formContent, (value) => {
-  console.log('formContentUpdate', value);
+  // console.log('formContentUpdate', value);
   // formValue.value = 
   emit('change', {
     formValue: formValue.value,
@@ -97,7 +97,7 @@ watch(formValue.value, (value) => {
   console.log('formValueUpdate', value);
 
   const newFormContentValue = useFormContent(props.content, useExpressionCompute(props.state, value));
-  console.log('form content', newFormContentValue);
+  // console.log('form content', newFormContentValue);
   // formContent.value = handleContent(props.content, useExpressionCompute(props.state, value));
   emit('update', 
     value,

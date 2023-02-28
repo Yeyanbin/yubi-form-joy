@@ -5,6 +5,7 @@
         <router-view></router-view>
       </n-layout-content>
       <n-layout-sider
+        v-if="!isSingle"
         bordered
         show-trigger
         collapse-mode="width"
@@ -25,7 +26,17 @@
 
 <script lang="ts" setup>
 import type { RouteRecordRaw } from 'vue-router';
-import router, { routes } from '../router';
+import { routes } from '../router';
+import { useRouter, useRoute } from 'vue-router';
+import { computed, ref } from 'vue';
+
+const router = useRouter();
+const route = useRoute();
+
+const isSingle = computed(() => {
+  console.log('currentRoute', router.currentRoute.value)
+  return router.currentRoute.value.meta?.isSingle || false;
+});
 
 const menuOptions = (routes as Array<RouteRecordRaw>).map((route) => {
   const menuItem = {};

@@ -78,6 +78,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '文本动画',
       icon: renderIcon(LogInOutline),
+      isSingle: true,
     },
   },
 ]

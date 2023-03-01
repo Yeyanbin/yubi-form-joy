@@ -43,9 +43,9 @@ const originText = ref(
 
 const content = ref<ITextLine[]>([]);
 
-const run = () => () => {
+const run = () => {
   content.value = [];
-
+  console.log('生成动画：', originText);
   textLoading(originText.value,
     {
       update: (texts: ITextLine[]) => {

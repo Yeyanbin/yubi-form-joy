@@ -4,7 +4,7 @@
 // boy`
 import pinyin from 'pinyin';
 
-const chReg = /[\u4E00-\u9FFF]+/g;
+const chReg = /[\u4E00-\u9FFF]+/;
 
 interface ILifeCycle {
   update: (texts: ITextLine[]) => void;
@@ -55,12 +55,12 @@ const textLoading = (text: string, lifeCycle: ILifeCycle, options = defaultOptio
         return;
       }
       
-      console.log('text', texts[line])
+      // console.log('text', texts[line])
       if (texts[line].pre.length > 0) {
         texts[line].inputs.push(texts[line].pre.pop());
         lifeCycle.update(texts);
         last = Date.now() + options.letterStep;
-        console.log('done')
+        // console.log('done')
 
         if (texts[line].pre.length === 0) {
           texts[line].words.push(textLines[line][index]);
@@ -69,7 +69,7 @@ const textLoading = (text: string, lifeCycle: ILifeCycle, options = defaultOptio
           ++index;
           lifeCycle.update(texts);
         }
-        console.log('func end')
+        // console.log('func end')
       } else if (line < textLines.length) {
         if (index < textLines[line].length) {
           ++total;
@@ -86,6 +86,8 @@ const textLoading = (text: string, lifeCycle: ILifeCycle, options = defaultOptio
             // last = Date.now() + options.letterStep;
             // ++index;
           } else {
+            console.log('word not pinyin', word);
+
             let spendTime;
             if (spendTime = specChar[textLines[line][index]]) {
               last = Date.now() + spendTime;
@@ -107,7 +109,7 @@ const textLoading = (text: string, lifeCycle: ILifeCycle, options = defaultOptio
 
 
       } else {
-        console.log(JSON.stringify(texts));
+        // console.log(JSON.stringify(texts));
         lifeCycle.finish && lifeCycle.finish(total)
         return;
       }
